@@ -1,18 +1,21 @@
 
 # webhook service server 
 
+## Instalar GO
+
 ```bash
+
 wget https://dl.google.com/go/go1.14.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.14.linux-amd64.tar.gz
 echo "PATH=$PATH:/usr/local/go/bin" >>~/.bashrc &&  . ~/.bashrc
 ```
-
 
 ```bash
 #check
 go version 
 ```
 
+## Configurar o WebHook service 
 ```bash
 git clone https://github.com/jotap1999/k8s-samba-authentication.git
 cd k8s-samba-authentication
@@ -20,6 +23,7 @@ cd k8s-samba-authentication
 go get github.com/go-ldap/ldap
 go get k8s.io/api/authentication/v1
 ```
+
 
 Editar ficheiro  main.go  com base na configuação do ldap 
 
@@ -45,9 +49,13 @@ user :=  fmt.Sprintf("%s@KUBER.NET", username)
 "cn=Users,dc=kuber,dc=net"
 ```
 
+
+## Compilar o código 
 ```bash
 GOOS=linux GOARCH=amd64 go build main.go
 ```
+
+## Gerar certificados
 Criar self-signed certificate. É recomendado usar um certificado assinado por uma CA 
 ```bash
 openssl req -x509 -newkey rsa:2048 -nodes \
@@ -57,7 +65,7 @@ openssl req -x509 -newkey rsa:2048 -nodes \
 
 ./main SERVER-LDAP  key.pem cert.pem  &>/var/log/k8s-samba-authentication.log &
 ```
-Test
+## Test 
 ```bash
 nano testldap.json
   {
@@ -83,6 +91,7 @@ curl -k -X POST -d @testldap.json https://127.0.0.1
 #Install kubeadm and Docker
 ```
 
+## Criar ficheiro de configuração do Webhook Token
 ```bash
 cat <<EOF > /root/webhook-config.yaml
 apiVersion: v1
@@ -103,6 +112,8 @@ current-context: authn
 EOF
 ```
 
+## Criar ficheiro de configuração do kubeadm
+
 ```bash
 cat <<EOF >kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
@@ -122,12 +133,17 @@ EOF
 
 ```
 
+
+## Converter ficheiro para uma versão mais recente e iniciar o Kubernetes com este mesmo ficheiro
 ```bash
 kubeadm config migrate --old-config kubeadm-config.yaml --new-config kubeadm-config-new.yaml
 kubeadm init --config kubeadm-config-new.yaml 
 ```
 
+
 ```bash
+#Instalar um CNI plugin. 
+#Exemplo o Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
@@ -148,7 +164,8 @@ kubectl config set-context user-context \
 kubectl config use-context  user-context
 
 kubectl config set-cluster kubernetes  \
-  --insecure-skip-tls-verify=true  \      
+  --insecure-skip-tls-verify=true  \
   --server https://X.X.X.X:6443 
 
 ```
+
