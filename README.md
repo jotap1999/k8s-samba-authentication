@@ -34,6 +34,7 @@ OpenLDAP
 slapcat | grep modifiersName | head -1
 ```
 ```bash
+nano main.go
 #Line 18 - Se o servidor LDAP estiver configurado "over ssl/tls"
 ldapURL = "ldaps://" + os.Args[1]
 
