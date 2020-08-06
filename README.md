@@ -25,18 +25,8 @@ go get k8s.io/api/authentication/v1
 ```
 
 
-Editar ficheiro  main.go  com base na configuação do ldap 
+Editar ficheiro  main.go  com base na configuação do LDAP/SAMBA 
 
-Correr o comando abaixo para obter as informações necessárias:
-
-SambaAD:
-```bash
-ldbsearch -H ldap://SERVER-LDAP  -U Administrator --password=Password '(&(sAMAccountName=Administrator))' | grep distinguishedName
-```
-OpenLDAP
-```bash
-slapcat | grep modifiersName | head -1
-```
 ```bash
 nano main.go
 #Line 18 - Se o servidor LDAP estiver configurado "over ssl/tls"
