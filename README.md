@@ -7,8 +7,9 @@ sudo tar -C /usr/local -xzf go1.14.linux-amd64.tar.gz
 echo "PATH=$PATH:/usr/local/go/bin" >>~/.bashrc &&  . ~/.bashrc
 ```
 
-check
+
 ```bash
+#check
 go version 
 ```
 
