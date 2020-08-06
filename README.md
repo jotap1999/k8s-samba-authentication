@@ -52,7 +52,9 @@ openssl req -x509 -newkey rsa:2048 -nodes \
     -subj "/CN=localhost" \
     -keyout key.pem \
     -out cert.pem
-
+```
+## Executar o WebHook service 
+```bash
 ./main SERVER-LDAP  key.pem cert.pem  &>/var/log/k8s-samba-authentication.log &
 ```
 ## Test 
