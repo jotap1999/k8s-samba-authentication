@@ -75,7 +75,33 @@ curl -k -X POST -d @testldap.json https://127.0.0.1
   }
 
 ```
+## Usar systemd para iniciar no BOOT
 
+```bash 
+nano /etc/systemd/system/webhook.service
+
+[Unit]
+Description=Samba AD Webhook Authentication Server
+After=network.target
+
+[Service]
+Type=simple
+
+
+ExecStart=/root/k8s-samba-authentication/main 127.0.0.1 /root/k8s-samba-authentication/key.pem /root/k8s-samba-authentication/cert.pem
+
+
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+``` 
+``bash
+systemctl start webhook.service
+systemctl enable webhook.service
+``` 
 
 # Kubernetes server
 
