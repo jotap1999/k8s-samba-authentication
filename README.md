@@ -97,8 +97,7 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 
-``` 
-``bash
+```bash 
 systemctl start webhook.service
 systemctl enable webhook.service
 ``` 
