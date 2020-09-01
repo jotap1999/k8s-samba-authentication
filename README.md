@@ -119,7 +119,7 @@ clusters:
   - name: authn
     cluster:
       server: https://X.X.X.X       #WebHook Server
-      insecure-skip-tls-verify: true    #Se o certificado não estiver assinado
+      insecure-skip-tls-verify: true    #If the certificate isn't signed by a CA
 users:
   - name: kube-apiserver
 contexts:
