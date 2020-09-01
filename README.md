@@ -1,7 +1,7 @@
 
 # webhook service server 
 
-## Instalar GO
+## Install GO
 
 ```bash
 
@@ -15,7 +15,7 @@ echo "PATH=$PATH:/usr/local/go/bin" >>~/.bashrc &&  . ~/.bashrc
 go version 
 ```
 
-## Configurar o WebHook service 
+## Configure the WebHook service  
 ```bash
 git clone https://github.com/jotap1999/k8s-samba-authentication.git
 cd k8s-samba-authentication
@@ -25,11 +25,11 @@ go get k8s.io/api/authentication/v1
 ```
 
 
-Editar ficheiro  main.go  com base na configuação do LDAP/SAMBA 
+Edit file  main.go  with base on the LDAP/SAMBA configuration
 
 ```bash
 nano main.go
-#Line 18 - Se o servidor LDAP estiver configurado "over ssl/tls"
+#Line 18 - If the LDAP server is configured "over ssl/tls"
 ldapURL = "ldaps://" + os.Args[1]
 
 #Line 95
@@ -40,20 +40,20 @@ user :=  fmt.Sprintf("%s@KUBER.NET", username)
 ```
 
 
-## Compilar o código 
+## Compile the code 
 ```bash
 GOOS=linux GOARCH=amd64 go build main.go
 ```
 
-## Gerar certificados
-Criar self-signed certificate. É recomendado usar um certificado assinado por uma CA 
+## Generate certificates
+Create self-signed certificate. It is recomended to use a certificate signed by a CA 
 ```bash
 openssl req -x509 -newkey rsa:2048 -nodes \
     -subj "/CN=localhost" \
     -keyout key.pem \
     -out cert.pem
 ```
-## Executar o WebHook service 
+## Run the WebHook service 
 ```bash
 ./main SERVER-LDAP  key.pem cert.pem  &>/var/log/k8s-samba-authentication.log &
 ```
@@ -69,13 +69,13 @@ nano testldap.json
   }
 
 curl -k -X POST -d @testldap.json https://127.0.0.1
-# Se o status estiver vazio, o webhook não está a funcionar  
+# If the status is empty the webhook is not working  
  "status": {
     "user": {}
   }
 
 ```
-## Usar systemd para iniciar no BOOT
+## Use systemd to iniciate on BOOT
 
 ```bash 
 nano /etc/systemd/system/webhook.service
@@ -110,7 +110,7 @@ systemctl enable webhook.service
 curl -o- https://raw.githubusercontent.com/jotap1999/k8s-docker-Install-Script-Ubuntu/master/install.sh  | bash
 ```
 
-## Criar ficheiro de configuração do Webhook Token
+## Create the Webhook Token configuration file 
 ```bash
 cat <<EOF > /root/webhook-config.yaml
 apiVersion: v1
@@ -131,7 +131,7 @@ current-context: authn
 EOF
 ```
 
-## Criar ficheiro de configuração do kubeadm
+## Create the kubeadm configuration file
 
 ```bash
 cat <<EOF >kubeadm-config.yaml
@@ -147,13 +147,13 @@ apiServer:
   certSANs:
     - X.X.X.X       #IP address Kubernetes API server listens
 networking:
-  podSubnet: "10.244.0.0/16" #se usar o Flannel
+  podSubnet: "10.244.0.0/16"
 EOF
 
 ```
 
 
-## Converter ficheiro para uma versão mais recente e iniciar o Kubernetes com este mesmo ficheiro
+## Convert the file into a more recent version and iniciate the Kubernetes with that same file
 ```bash
 kubeadm config migrate --old-config kubeadm-config.yaml --new-config kubeadm-config-new.yaml
 kubeadm init --config kubeadm-config-new.yaml 
@@ -161,13 +161,13 @@ kubeadm init --config kubeadm-config-new.yaml
 
 
 ```bash
-#Instalar um CNI plugin. 
-#Exemplo o Flannel
+#Install a CNI plugin. 
+#Example the Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
 ```bash
-#Criar as ClusterRole para os utilizadores ou grupos
+#Create the ClusterRole or Roles to the users or groups
 ```
 
 
