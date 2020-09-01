@@ -27,8 +27,8 @@ go get k8s.io/api/authentication/v1
 
 Edit file  main.go  with base on the LDAP/SAMBA configuration
 
-```bash
 nano main.go
+```bash
 #Line 18 - If the LDAP server is configured "over ssl/tls"
 ldapURL = "ldaps://" + os.Args[1]
 
@@ -57,9 +57,9 @@ openssl req -x509 -newkey rsa:2048 -nodes \
 ```bash
 ./main SERVER-LDAP  key.pem cert.pem  &>/var/log/k8s-samba-authentication.log &
 ```
-## Test 
-```bash
+## Test
 nano testldap.json
+```bash
   {
     "apiVersion": "authentication.k8s.io/v1",
     "kind": "TokenReview",
@@ -67,7 +67,8 @@ nano testldap.json
       "token": "user:userpassword"
     }
   }
-
+```
+```bash
 curl -k -X POST -d @testldap.json https://127.0.0.1
 # If the status is empty the webhook is not working  
  "status": {
@@ -76,20 +77,16 @@ curl -k -X POST -d @testldap.json https://127.0.0.1
 
 ```
 ## Use systemd to iniciate on BOOT
-
-```bash 
 nano /etc/systemd/system/webhook.service
 
+```bash 
 [Unit]
 Description=Samba AD Webhook Authentication Server
 After=network.target
 
 [Service]
 Type=simple
-
-
 ExecStart=/root/k8s-samba-authentication/main 127.0.0.1 /root/k8s-samba-authentication/key.pem /root/k8s-samba-authentication/cert.pem
-
 
 RestartSec=10
 Restart=always
