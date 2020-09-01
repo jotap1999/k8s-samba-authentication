@@ -168,6 +168,19 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 
 ```bash
 #Create the ClusterRole or Roles to the users or groups
+#For example:
+
+kind: ClusterRoleBinding
+metadata:
+  name: k8s-admin-group
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: Group
+  name: kuberadmin
+  apiGroup: rbac.authorization.k8s.io
 ```
 
 
@@ -188,3 +201,5 @@ kubectl config set-cluster kubernetes  \
 
 ```
 
+# References
+- https://github.com/weibeld/k8s-ldap-authentication
