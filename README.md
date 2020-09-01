@@ -201,5 +201,5 @@ kubectl config set-cluster kubernetes  \
 
 ```
 
-# References
+# Reference
 - https://github.com/weibeld/k8s-ldap-authentication
