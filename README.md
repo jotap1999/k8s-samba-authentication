@@ -107,6 +107,7 @@ systemctl enable webhook.service
 
 ```bash
 #Install kubeadm and Docker
+curl -o- https://raw.githubusercontent.com/jotap1999/k8s-docker-Install-Script-Ubuntu/master/install.sh  | bash
 ```
 
 ## Criar ficheiro de configuração do Webhook Token
