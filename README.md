@@ -167,6 +167,7 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 #Create the ClusterRole or Roles to the users or groups
 #For example:
 
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: k8s-admin-group
