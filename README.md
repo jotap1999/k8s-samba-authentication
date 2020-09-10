@@ -17,7 +17,7 @@ go version
 
 ## Configure the WebHook service  
 ```bash
-git clone https://github.com/jotap1999/k8s-samba-authentication.git
+git clone https://github.com/jotapff/k8s-samba-authentication.git
 cd k8s-samba-authentication
 
 go get github.com/go-ldap/ldap
@@ -104,7 +104,7 @@ systemctl enable webhook.service
 
 ```bash
 #Install kubeadm and Docker
-curl -o- https://raw.githubusercontent.com/jotap1999/k8s-docker-Install-Script-Ubuntu/master/install.sh  | bash
+curl -o- https://raw.githubusercontent.com/jotapff/k8s-docker-Install-Script-Ubuntu/master/install.sh  | bash
 ```
 
 ## Create the Webhook Token configuration file 
